@@ -4128,7 +4128,7 @@ function mpJoin(){
   const code=document.getElementById('mp-join-code').value.toUpperCase();
   const name=(document.getElementById('mp-name-input').value||'DRIVER').toUpperCase();
   if(!code){showLobbyStatus('⚠ Enter a room code first',true);return;}
-  const url=`ws://${location.hostname}:3000`;
+  const url='wss://retro-racer-multi.up.railway.app';
   mp.connect(url)
     .then(()=>mp.join(code,name))
     .catch(()=>showLobbyStatus('⚠ Cannot reach server — is node server.js running?',true));
