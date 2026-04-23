@@ -4119,7 +4119,7 @@ function openMultiplayer(){
 }
 function mpHost(){
   const name=(document.getElementById('mp-name-input').value||'DRIVER').toUpperCase();
-  const url=`ws://${location.hostname}:3000`;
+  const url='wss://retro-racer-multi.up.railway.app';
   mp.connect(url)
     .then(()=>mp.host(name))
     .catch(()=>showLobbyStatus('⚠ Cannot reach server — is node server.js running?',true));
