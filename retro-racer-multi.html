@@ -2426,7 +2426,7 @@ function render() {
     car.draw(ctx);
   }
   // MULTIPLAYER: draw remote human players on top of everything
-  if (mp.connected) mp.drawRemoteCars(ctx, cameraX, cameraY);
+  if (mp.connected) mp.drawRemoteCars(ctx, 0, 0);
   ctx.restore();
   drawMinimap();
   updateHUD();
@@ -2589,7 +2589,7 @@ function updateHUD() {
   const efStr=ef==='oil'?'<span style="color:#8888ff">OIL</span>':ef==='rain'?'<span style="color:#4488cc">RAIN</span>':'';
   document.getElementById('hud').innerHTML=`
     <div class="hud-item"><div class="hud-label">SPEED</div><div class="bar"><div class="bar-fill" style="width:${sp}%"></div></div></div>
-    <div class="hud-item"><div class="hud-label">POS</div><div class="hud-value">${player.position}/${opponents.length+1}</div></div>
+    <div class="hud-item"><div class="hud-label">POS</div><div class="hud-value">${player.position}/${opponents.length+1+Object.keys(mp.players).length}</div></div>
     <div class="hud-item"><div class="hud-label">LAP</div><div class="hud-value">${lap}/${level.laps}</div></div>
     <div class="hud-item"><div class="hud-label">TIME</div><div class="hud-value">${m}:${s}</div></div>
     <div class="hud-item"><div class="hud-label">MPH</div><div class="hud-value">${Math.floor(player.speed*25)}</div></div>
