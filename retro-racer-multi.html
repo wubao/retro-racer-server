@@ -2306,6 +2306,7 @@ function gameLoop(time) {
 	
 	// MULTIPLAYER: broadcast our position to other players
     if (mp.connected && mp.roomCode) mp.sendState(player);
+		applyRemoteCarCollisions();
 
 	if (raceState==='racing') {
 	  const allCars=[player,...opponents];
@@ -4093,6 +4094,30 @@ class MultiplayerClient {
 }
 
 const mp = new MultiplayerClient();
+
+function showLobbyStatus(text,isError=false){function applyRemoteCarCollisions() {
+  if (!mp.connected || !mp.roomCode) return;
+  for (const [id, p] of Object.entries(mp.players)) {
+    const dx = player.x - p.x;
+    const dy = player.y - p.y;
+    const dist = Math.hypot(dx, dy);
+    const minDist = 20; // roughly car width
+    if (dist < minDist && dist > 0.01) {
+      // Push our car away from the remote car
+      const force = (minDist - dist) / minDist * 0.4;
+      const nx = dx / dist;
+      const ny = dy / dist;
+      player.vx += nx * force;
+      player.vy += ny * force;
+      // Play a light collision sound
+      const t = performance.now();
+      if (t - lastCarCollisionTime > 200) {
+        playCollisionSound(0.3, 'car');
+        lastCarCollisionTime = t;
+      }
+    }
+  }
+}
 
 function showLobbyStatus(text,isError=false){
   const el=document.getElementById('mp-status');
