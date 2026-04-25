@@ -4038,9 +4038,10 @@ class MultiplayerClient {
   sendEvent(ev,data){if(this.connected)this._send({type:'event',event:ev,data});}
   drawRemoteCars(ctx,camX,camY){
     for(const[id,p]of Object.entries(this.players)){
-      const sx=p.x-camX, sy=p.y-camY;
+      // Clip check uses screen coords even though we draw in world space
+      const sx=p.x-cameraX, sy=p.y-cameraY;
       if(sx<-60||sx>860||sy<-60||sy>660)continue;
-      ctx.save(); ctx.translate(sx,sy); ctx.rotate(p.angle);
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.angle);
       ctx.fillStyle=this._colour(id); ctx.fillRect(-11,-6,22,13);
       ctx.fillStyle='rgba(180,220,255,0.7)'; ctx.fillRect(2,-4,7,8);
       ctx.rotate(-p.angle);
