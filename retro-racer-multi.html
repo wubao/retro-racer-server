@@ -240,6 +240,9 @@ h2 { color: #e0e0e0; font-size: 16px; margin-bottom: 14px; letter-spacing: 4px; 
   <div id="countdown" style="display:none"></div>
   <div id="big-message" style="display:none"></div>
   <div id="pace-hud">● REC — DRIVE ONE LAP</div>
+  <div id="weather-hud" style="display:none;position:absolute;top:8px;left:8px;z-index:30;
+    background:rgba(0,0,0,0.6);border:1px solid #444;padding:5px 10px;
+    font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;pointer-events:none;"></div>
   <div id="pace-modal">
     <div class="pace-modal-box">
       <h2>LAP COMPLETE</h2>
@@ -307,9 +310,10 @@ h2 { color: #e0e0e0; font-size: 16px; margin-bottom: 14px; letter-spacing: 4px; 
       <div class="info-row"><span class="label">CAR</span><span class="value" id="car-display">1.6 TARACO NEO</span></div>
     </div>
 	<div class="controls-info">
-      <span class="key">↑</span> ACCEL &nbsp;
-      <span class="key">↓</span> BRAKE → HANDBRAKE → REVERSE &nbsp;
-      <span class="key">←</span><span class="key">→</span> STEER
+     <span class="key">↑</span> ACCEL &nbsp;
+      <span class="key">↓</span> BRAKE → REVERSE &nbsp;
+      <span class="key">←</span><span class="key">→</span> STEER &nbsp;
+      <span class="key">B</span> HANDBRAKE
     </div>
     <button class="btn" style="background:#11304a;border-color:#1a66bb;color:#aaccff;margin-top:6px" onclick="openMultiplayer()">⚡ MULTIPLAYER</button>
   </div>
@@ -339,6 +343,13 @@ h2 { color: #e0e0e0; font-size: 16px; margin-bottom: 14px; letter-spacing: 4px; 
         </select>
         <label>NAME:</label>
         <input type="text" id="course-name-input" placeholder="MY CIRCUIT" maxlength="30">
+        <label>DIFF:</label>
+        <select id="course-difficulty-select">
+          <option value="Easy">EASY</option>
+          <option value="Medium" selected>MEDIUM</option>
+          <option value="Hard">HARD</option>
+          <option value="Expert">EXPERT</option>
+        </select>
         <span style="font-size:9px;color:#444;margin-left:2px">S=start · click road=N/S/W</span>
       </div>
       <div id="builder-canvas-wrap">
@@ -767,6 +778,176 @@ const BUILTIN_LEVELS = [
       {x:560,y:1009},{x:479,y:1002},
     ],
   },
+   {
+    name:'THE PRETZEL', info:'Medium circuit.', laps:5,
+    grid:[
+      '111111111111111111111111000000000000111111111111111111111111',
+      '111111111111111111111111000000000000111111111111111111111111',
+      '111111111111111111111111000000000000111111111111111111111111',
+      '111(11111-11111-11111)11000000000000111(11111-11111-11111)11',
+      '111111111111111111111111000000000000111111111111111111111111',
+      '111111111111111111111111000000000000111111111111111111111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111|11000000000000111|11000000000000111|11000000000000111|11',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111|11000000000000111|11000000000000111|11000000000000111|11',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000000000111111000000000000111111',
+      '111111000000000000111111000000111111111111000000111111111111',
+      '111111000000000000111111000000111111111111000000111111111111',
+      '111111000000000000111111000000111111111111000000111111111111',
+      '111|11000000000000111|11000000111(11111111000000111(11111)11',
+      '111111000000000000111111000000111111111111000000111111111111',
+      '111111000000000000111111000000111111111111000000111111111111',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111|11000000000000111|11000000111|11000000000000111|11000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111|11000000000000111|11000000111|11000000000000111|11000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111000000000000111111000000111111000000000000111111000000',
+      '111111111111111111111111111111111111111111111111111111000000',
+      '111111111111111111111111111111111111111111111111111111000000',
+      '111111111111111111111111111111111111111111111111111111000000',
+      '111(11111-11111-11111+11111-11111+11111-11111-11111)11000000',
+      '111111111111111111111111111111111111111111111111111111000000',
+      '111111111111111111111111111111111111111111111111111111000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111|11000000111|11000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111|11000000111|11000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111000000111111000000000000000000000000',
+      '000000000000000000111111111111111111000000000000000000000000',
+      '000000000000000000111111111111111111000000000000000000000000',
+      '000000000000000000111111111111111111000000000000000000000000',
+      '000000000000000000111(11111-11111)11000000000000000000000000',
+      '000000000000000000111111111111111111000000000000000000000000',
+      '000000000000000000111111111111111111000000000000000000000000'
+    ],
+    startLine:{x:1440,y1:720,y2:960},
+	startPos:{x:1320,y:800,angle:0},
+    opponentStarts:[
+      {x:1320,y:880,angle:0},
+      {x:1220,y:800,angle:0},
+      {x:1220,y:880,angle:0}
+    ],
+    waypoints:[
+      {x:1260,y:620},
+      {x:1260,y:380},
+      {x:1260,y:140},
+      {x:1820,y:140},
+      {x:2060,y:140},
+      {x:2300,y:140},
+      {x:2300,y:380},
+      {x:2300,y:620},
+      {x:2300,y:860},
+      {x:2060,y:860},
+      {x:2060,y:1100},
+      {x:2060,y:1340},
+      {x:2060,y:1580},
+      {x:1820,y:1580},
+      {x:1580,y:1580},
+      {x:1340,y:1580},
+      {x:1100,y:1580},
+      {x:860,y:1580},
+      {x:620,y:1580},
+      {x:380,y:1580},
+      {x:140,y:1580},
+      {x:140,y:1340},
+      {x:140,y:1100},
+      {x:140,y:860},
+      {x:140,y:620},
+      {x:140,y:380},
+      {x:140,y:140},
+      {x:380,y:140},
+      {x:620,y:140},
+      {x:860,y:140},
+      {x:860,y:380},
+      {x:860,y:620},
+      {x:860,y:860},
+      {x:860,y:1100},
+      {x:860,y:1340},
+      {x:860,y:1580},
+      {x:860,y:1820},
+      {x:860,y:2060},
+      {x:860,y:2300},
+      {x:1100,y:2300},
+      {x:1340,y:2300},
+      {x:1340,y:2060},
+      {x:1340,y:1820},
+      {x:1340,y:1580},
+      {x:1340,y:1340},
+      {x:1340,y:1100},
+      {x:1280,y:860},
+    ],
+    useSimpleCheckpoints:true,
+    _midWp:{"x":140,"y":860},
+    paceWaypoints:[
+      {x:1580,y:815},
+      {x:1580,y:626},
+      {x:1580,y:379},
+      {x:1611,y:125},
+      {x:1831,y:67},
+      {x:2088,y:78},
+      {x:2276,y:195},
+      {x:2250,y:431},
+      {x:2248,y:693},
+      {x:2087,y:858},
+      {x:2054,y:1085},
+      {x:2047,y:1346},
+      {x:1955,y:1554},
+      {x:1719,y:1550},
+      {x:1456,y:1540},
+      {x:1185,y:1541},
+      {x:914,y:1562},
+      {x:643,y:1554},
+      {x:375,y:1547},
+      {x:119,y:1484},
+      {x:88,y:1258},
+      {x:89,y:997},
+      {x:91,y:726},
+      {x:92,y:450},
+      {x:97,y:174},
+      {x:287,y:73},
+      {x:541,y:64},
+      {x:804,y:85},
+      {x:846,y:292},
+      {x:831,y:545},
+      {x:823,y:814},
+      {x:814,y:1088},
+      {x:806,y:1364},
+      {x:797,y:1641},
+      {x:789,y:1918},
+      {x:802,y:2188},
+      {x:1015,y:2243},
+      {x:1272,y:2246},
+      {x:1396,y:2075},
+      {x:1377,y:1826},
+      {x:1352,y:1559},
+      {x:1327,y:1286},
+      {x:1302,y:1011},
+      {x:1453,y:837},
+
+    ],
+  },
 ];
 /* ── PRESET CUSTOM COURSES (from JSON exports) ── */
 const PRESET_COURSE_DATA = [
@@ -911,6 +1092,10 @@ let lastWallCollisionTime = 0, lastCarCollisionTime = 0, lastDebrisDropTime = 0;
 let finishTriggered = false;
 let wrongWayFrames = 0, _playerWpIdx = 0;
 const skidMarks = [], dustParts = [], debrisObjs = [];
+const WEATHER_TYPES = ['sunny','sunny','normal','normal','rain'];
+let weather = 'normal';
+let weatherPuddles = []; // {x,y,r} world coords on road tiles
+let rainDrops = []; // screen-space rain animation particles
 
 /* ── TRACK ── */
 class Track {
@@ -942,12 +1127,20 @@ class Car {
     this.lap=0; this.checkpoint=0; this.finished=false; this.finishTime=0; this.position=1;
     this.skidding=false; this.prevX=x; this.prevY=y;
 	this.lastCarCollision=0; this.tileEffect=null;
+    this._onPuddle=false; this._puddleFrames=0; this._puddleWobble=0;
+    this.tyreTread = 100;
+    this._tyrePopped = false;
+    this._cornerWearCooldown = 0;
+    this.damage = 0; // 0 = pristine, 100 = destroyed
+    this._engineBlown = false;
+    this._chugging = 0; // chug animation frame counter
 	this._boostMult=1.0;
 	this.stuckFrames=0; this.flashFrames=0; this._inTunnel=false;
   }
   get speed() { return Math.hypot(this.vx,this.vy); }
   applyInput(input) {
-    if (input.up) { this.vx+=Math.cos(this.angle)*this.acceleration; this.vy+=Math.sin(this.angle)*this.acceleration; }
+    const dmgAccFactor = 1 - (this.damage / 100) * 0.5;
+    if (input.up) { this.vx+=Math.cos(this.angle)*this.acceleration*dmgAccFactor; this.vy+=Math.sin(this.angle)*this.acceleration*dmgAccFactor; }
     if (input.reverse) { this.vx-=Math.cos(this.angle)*this.acceleration*0.6; this.vy-=Math.sin(this.angle)*this.acceleration*0.6; }
     if (input.brake) {
       const s=this.speed;
@@ -961,13 +1154,109 @@ class Car {
     if (input.handbrake) grip=this.handbrakeGrip;
     if (this.tileEffect==='oil')  grip=0.006;
     if (this.tileEffect==='rain') grip=this.grip*0.65;
+    if (weather==='rain') grip *= 0.78;
+
+    // Tyre wear affects grip — every 10% lost adds sliding
+    const treadLoss = 100 - this.tyreTread;
+    const wearGripMult = 1 - (treadLoss / 100) * 0.4; // up to 40% grip loss at 0% tread
+    grip *= Math.max(0.6, wearGripMult);
+
+    // Popped tyre — 70% speed cap
+    if (this._tyrePopped) {
+      const popCap = this.maxSpeed * 0.3;
+      if (this.speed > popCap) { this.vx=(this.vx/this.speed)*popCap; this.vy=(this.vy/this.speed)*popCap; }
+    }
+
+    // Corner wear — deduct 0.1% per corner at full speed, once per corner entry
+    if (this._cornerWearCooldown > 0) this._cornerWearCooldown--;
+    const angularVelForWear = Math.abs(this.angle - (this._prevAngle||this.angle));
+    const onCornerTile = angularVelForWear > 0.03; // turning meaningfully
+    if (onCornerTile && s >= this.maxSpeed*0.85 && this._cornerWearCooldown===0) {
+      this.tyreTread = Math.max(0, this.tyreTread - 0.5); // 0.5% per corner
+      this._cornerWearCooldown = 90; // once per corner entry
+// Blowout chance scales with tread loss
+      if (!this._tyrePopped) {
+        let blowoutChance = 0;
+        if (this.tyreTread <= 0)        blowoutChance = 1.00;
+        else if (this.tyreTread <= 2)   blowoutChance = 0.95;
+        else if (this.tyreTread <= 10)  blowoutChance = 0.80;
+        else if (this.tyreTread <= 20)  blowoutChance = 0.05;
+        if (blowoutChance > 0 && Math.random() < blowoutChance) {
+        this._tyrePopped = true;
+        if (this === player) {
+          playCollisionSound(0.6, 'wall');
+          console.log('[TYRE BLOWN]');
+        } else {
+          // CPU car — assign a permanent slow lane offset
+          this._slowLaneOffset = (Math.random() < 0.5 ? 1 : -1) * (10 + Math.random() * 5);
+        }
+      }
+      }
+    }
+
+    // Oil/rain obstacle wear
+    if ((this.tileEffect==='oil'||this.tileEffect==='rain') && this._cornerWearCooldown===0) {
+      this.tyreTread = Math.max(0, this.tyreTread - (0.2 + Math.random()*0.3));
+      this._cornerWearCooldown = 90;
+    }
     this.skidding=(input.handbrake||this.tileEffect==='oil')&&s>1.5;
+    // Rain spin-out: 5% chance per corner at full speed
+if (weather==='rain' && !this._spinning) {
+      const angularVel = Math.abs(this.angle - (this._prevAngle||this.angle));
+      const atTopSpeed = s >= this.maxSpeed * 0.92;
+      const corneringForce = atTopSpeed ? angularVel * s : 0;
+      this._cornerAcc = (this._cornerAcc||0) + corneringForce;
+      // Decay whenever not at top speed or not cornering
+      if (!atTopSpeed || angularVel < 0.01) this._cornerAcc = Math.max(0, this._cornerAcc - 0.02);
+     if (this._cornerAcc > 0.8) {
+        console.log(`[SPINOUT CHECK] ${this.name} cornerAcc:${this._cornerAcc.toFixed(3)} speed:${s.toFixed(2)} maxSpeed:${this.maxSpeed.toFixed(2)} atTopSpeed:${atTopSpeed} roll:${Math.random().toFixed(3)}`);
+      }
+     if (this._cornerAcc > 0.8 && Math.random() < 0.80) {
+        console.log(`[SPINOUT TRIGGER] ${this.name} sliding now`);
+        this._spinning = true;
+        this._spinFrames = 90;
+        this._cornerAcc = 0;
+        const prevA = this._prevAngle || this.angle;
+        this._spinDir = (this.angle - prevA) >= 0 ? 1 : -1;
+        this.tyreTread = Math.max(0, this.tyreTread - 2.0); // spinout costs 2%
+        if (this === player) playWetScreech();
+      }
+    }
+    this._prevAngle = this.angle;
+	
+    if (this._spinning) {
+      if (!this._slideLogged) { console.log(`[SLIDE ACTIVE] ${this.name} spinDir:${this._spinDir} frames:${this._spinFrames}`); this._slideLogged=true; }
+      const slideDir = this._spinDir || 1;
+      // Force grip to near zero so momentum carries the car wide
+      grip = 0.008;
+      // Nudge angle in slide direction
+      this.angle += 0.018 * slideDir;
+      // Count down slide duration — 90 frames = 1.5 seconds
+      this._spinFrames = (this._spinFrames||90) - 1;
+      if (this._spinFrames <= 0) {
+        console.log(`[SLIDE END] ${this.name}`);
+        this._spinning = false;
+        this._spinDir = 0;
+        this._spinFrames = 0;
+        this._slideLogged = false;
+      }
+    }
     const fx=Math.cos(this.angle), fy=Math.sin(this.angle);
     const fwd=this.vx*fx+this.vy*fy;
     this.vx+=(fx*fwd-this.vx)*grip;
     this.vy+=(fy*fwd-this.vy)*grip;
     this.vx*=(1-this.friction); this.vy*=(1-this.friction);
-    const cap=(input.reverse?this.maxSpeed*0.5:this.maxSpeed)*(this.tileEffect==='rain'?0.82:1)*this._boostMult;
+    // Engine blown — chug in place
+    if (this._engineBlown) {
+      this._chugging = (this._chugging||0) + 1;
+      const chug = Math.sin(this._chugging * 0.3) * 1.5;
+      this.vx = Math.cos(this.angle) * chug * 0.04;
+      this.vy = Math.sin(this.angle) * chug * 0.04;
+      return;
+    }
+    // Damage reduces acceleration and top speed
+    const dmgFactor = 1 - (this.damage / 100) * 0.5; // up to 50% reduction at 100% damage
+    const cap=(input.reverse?this.maxSpeed*0.5:this.maxSpeed)*(this.tileEffect==='rain'?0.82:1)*this._boostMult*dmgFactor;
     const s2=this.speed;
     if (s2>cap) { this.vx=(this.vx/s2)*cap; this.vy=(this.vy/s2)*cap; }
   }
@@ -1225,6 +1514,16 @@ chooseInput(waypoints, allCars) {
     this.overtake.update(allCars);
     this._boostMult = this.overtake.speedBoost * this.overtake.erraticFactor;
 
+    // Blown tyre slow lane mode
+    if (this._tyrePopped && this._slowLaneOffset !== undefined) {
+      this.overtake.targetOffset = this._slowLaneOffset;
+      this.overtake.state = 'none'; // disable overtaking
+      // Cap speed to 40% of max
+      if (this.speed > this.maxSpeed * 0.4) {
+        this.vx *= 0.97; this.vy *= 0.97;
+      }
+    }
+
 // ── Record route during lap 1 (only if no pace lap exists) ──
     if (this.lap === 0 && !this.learnedRoute && !this._usePaceRoute) {
       this.routeRecordFrame++;
@@ -1418,6 +1717,25 @@ function playBeep(freq,dur,type='square',vol=.12) {
   g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+dur);
   osc.connect(g).connect(ac.destination); osc.start(); osc.stop(ac.currentTime+dur);
 }
+function playSplashSound() {
+  const ac = getAudio();
+  const dur = 0.35;
+  const buf = ac.createBuffer(1, ac.sampleRate*dur, ac.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i=0; i<data.length; i++) {
+    const t = i/ac.sampleRate;
+    // White noise shaped like a water splash — fast attack, slow decay
+    const noise = (Math.random()*2-1);
+    const env = Math.exp(-t*9) * (1 - Math.exp(-t*80));
+    const low = Math.sin(2*Math.PI*90*t) * Math.exp(-t*12);
+    data[i] = (noise*0.6 + low*0.4) * env * 0.8;
+  }
+  const src = ac.createBufferSource(); src.buffer = buf;
+  const g = ac.createGain(); g.gain.value = 0.4;
+  const hp = ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=200;
+  src.connect(hp).connect(g).connect(ac.destination);
+  src.start();
+}
 let engNodes=null;
 function startEngine() {
   if (engNodes) return;
@@ -1487,6 +1805,54 @@ function stopScreech() {
   screechNodes.g.gain.setTargetAtTime(0, ac.currentTime, 0.15);
   screechNodes = null;
 }
+
+function playWetScreech() {
+  const ac = getAudio();
+  const dur = 1.2;
+  const buf = ac.createBuffer(1, ac.sampleRate*dur, ac.sampleRate);
+  const data = buf.getChannelData(0);
+  let lastVal = 0;
+  for (let i=0; i<data.length; i++) {
+    const t = i/ac.sampleRate;
+    const white = Math.random()*2-1;
+    lastVal = 0.992*lastVal + 0.008*white;
+    // Lower pitch than dry screech, more watery hiss
+    const tone = Math.sin(2*Math.PI*380*t)*0.15;
+    const hiss = Math.sin(2*Math.PI*1200*t)*0.08;
+    const env = Math.pow(1 - t/dur, 0.5);
+    data[i] = (lastVal*0.8 + tone + hiss) * env;
+  }
+  const src = ac.createBufferSource(); src.buffer = buf;
+  const g = ac.createGain(); g.gain.value = 0.32;
+  const bp = ac.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=500; bp.Q.value=0.8;
+  src.connect(bp).connect(g).connect(ac.destination);
+  src.start();
+}
+
+function applyCarDamage(car, speed) {
+  if (car._engineBlown) return;
+  let dmg = 0;
+  if      (speed > car.maxSpeed * 0.75) dmg = 1.0;
+  else if (speed > car.maxSpeed * 0.4)  dmg = 0.5;
+  else                                   dmg = 0.1 + Math.random()*0.1;
+  car.damage = Math.min(100, car.damage + dmg);
+
+  // Engine blowout chance scales with damage
+  if (!car._engineBlown) {
+    let blowChance = 0;
+    if (car.damage >= 100)     blowChance = 1.00;
+    else if (car.damage >= 95) blowChance = 0.95;
+    else if (car.damage >= 80) blowChance = 0.20;
+    if (blowChance > 0 && Math.random() < blowChance) {
+      car._engineBlown = true;
+      if (car === player) {
+        playCollisionSound(0.8, 'wall');
+        console.log('[ENGINE BLOWN]');
+      }
+    }
+  }
+}
+
 /* ── TILE EFFECTS ── */
 function applyTileEffect(car) {
   const tile = track.tileAt(car.x, car.y);
@@ -1581,10 +1947,12 @@ function checkCarCollisions() {
         if (now-a.lastCarCollision>220) {
           a.vx*=slowF; a.vy*=slowF; a.lastCarCollision=now;
           if (a===player) profile.carDamage=(profile.carDamage||0)+(isFR?2:1);
+          applyCarDamage(a, a.speed);
         }
         if (now-b.lastCarCollision>220) {
           b.vx*=slowF; b.vy*=slowF; b.lastCarCollision=now;
           if (b===player) profile.carDamage=(profile.carDamage||0)+(isFR?2:1);
+          applyCarDamage(b, b.speed);
         }
         if (Math.random()<.1&&now-lastDebrisDropTime>400) {
           debrisObjs.push({x:(a.x+b.x)*.5,y:(a.y+b.y)*.5,life:1});
@@ -1802,7 +2170,7 @@ const gd = _useGenData ? cd.generatedData : null;
   }
 
   const levelObj = {
-    name: cd.name, info: 'Custom course', laps: 5, grid: gameGrid,
+    name: cd.name, info: cd.difficulty || 'Custom course', laps: 5, grid: gameGrid,
     bridgeOrientMap,
 	
     startLine:      gd ? gd.startLine      : startLine,
@@ -2029,8 +2397,20 @@ function startRace(levelIndex) {
     // If a pace lap route exists, use it immediately from lap 1
     if (level.paceWaypoints && level.paceWaypoints.length > 4) {
       op.learnedRoute = level.paceWaypoints;
-      op.learnedRouteIdx = 0;
       op._usePaceRoute = true;
+      // Find the closest pace waypoint in the forward direction from spawn
+      let bestPaceIdx = 0, bestPaceScore = -Infinity;
+      const fwdX = Math.cos(op.angle), fwdY = Math.sin(op.angle);
+      for (let i = 0; i < level.paceWaypoints.length; i++) {
+        const dx = level.paceWaypoints[i].x - op.x;
+        const dy = level.paceWaypoints[i].y - op.y;
+        const d = Math.hypot(dx, dy);
+        if (d < 10) continue;
+        const dot = (dx/d)*fwdX + (dy/d)*fwdY;
+        const score = dot * 2 - d * 0.001;
+        if (score > bestPaceScore) { bestPaceScore = score; bestPaceIdx = i; }
+      }
+      op.learnedRouteIdx = bestPaceIdx;
       console.log(`[PACE ROUTE] ${op.name} | using pace route (${level.paceWaypoints.length} pts)`);
     }
   });
@@ -2040,10 +2420,46 @@ function startRace(levelIndex) {
 
   skidMarks.length=0; debrisObjs.length=0;
   brakeHoldFrames=0; reverseEngaged=false; finishTriggered=false;
+  if (player) { player.tyreTread=100; player._tyrePopped=false; player.damage=0; player._engineBlown=false; player._chugging=0; player._blowoutTriggered=false; }
+  if (opponents) opponents.forEach(op=>{ op.tyreTread=100; op._tyrePopped=false; op.damage=0; op._engineBlown=false; op._chugging=0; op._slowLaneOffset=undefined; });
   lastWallCollisionTime=0; lastCarCollisionTime=0; lastDebrisDropTime=0;
   wrongWayFrames=0; _playerWpIdx=0;
   document.getElementById('wrong-way').style.display='none';
   track._crossArrows = computeCrossArrows(track, level.waypoints);
+
+  // Pick random weather
+  weather = WEATHER_TYPES[Math.floor(Math.random()*WEATHER_TYPES.length)];
+  weatherPuddles = [];
+  rainDrops = [];
+  const wxHud = document.getElementById('weather-hud');
+  if (wxHud) {
+    const wxLabel = weather==='rain' ? '🌧 RAIN' : weather==='sunny' ? '☀ SUNNY' : '⛅ NORMAL';
+    const wxColor = weather==='rain' ? '#88aacc' : weather==='sunny' ? '#ffcc44' : '#aaaaaa';
+    wxHud.style.display = 'block';
+    wxHud.style.color = wxColor;
+    wxHud.style.borderColor = wxColor;
+    wxHud.textContent = wxLabel;
+  }
+  if (weather === 'rain') {
+    const rows = level.grid.length, cols = level.grid[0].length;
+    const puddleCount = 18 + Math.floor(Math.random()*12);
+    let attempts = 0;
+    while (weatherPuddles.length < puddleCount && attempts++ < 500) {
+      const r = Math.floor(Math.random()*rows), c = Math.floor(Math.random()*cols);
+      if (ROAD_TILES.has(level.grid[r][c])) {
+        weatherPuddles.push({
+          x: c*TILE + TILE*0.2 + Math.random()*TILE*0.6,
+          y: r*TILE + TILE*0.2 + Math.random()*TILE*0.6,
+          rx: 10 + Math.random()*18,
+          ry: 5 + Math.random()*10,
+        });
+      }
+    }
+    for (let i=0;i<120;i++) rainDrops.push({
+      sx: Math.random()*CANVAS_W, sy: Math.random()*CANVAS_H,
+      spd: 6+Math.random()*4, life: Math.random()
+    });
+  }
 
   document.getElementById('profile-btn').style.display = 'none';
   showScreen(null);
@@ -2058,6 +2474,7 @@ function returnToMenu() {
   profile.cash = gameState.cash;
   dbPut('profile', {...profile});
   raceState='menu'; rafRunning=false;
+  hideWeatherHud();
   stopEngine(); hideCountdown(); hideBigMsg();
   document.getElementById('profile-btn').style.display = 'block';
   updateMenuDisplay(); showScreen('menu-screen');
@@ -2177,6 +2594,21 @@ function maybeFinishRace(level) {
   setTimeout(()=>{ raceState='finished'; showResults(level); },2200);
 }
 
+function triggerEngineBlowout(level) {
+  if (player._blowoutTriggered) return;
+  player._blowoutTriggered = true;
+  raceState = 'finished';
+  stopEngine();
+  showBigMsg('RACE OVER');
+  // Add DNF note to results
+  player.finished = false;
+  player.finishTime = null;
+  setTimeout(() => {
+    hideBigMsg();
+    showResults(level);
+  }, 5000);
+}
+
 function showResults(level) {
   hideBigMsg(); stopEngine();
   const all=[player,...opponents];
@@ -2254,7 +2686,6 @@ function gameLoop(time) {
     const dn=keys['ArrowDown']||keys['KeyS'];
     if (dn) {
       brakeHoldFrames++;
-      // Reverse: 0.5s (30 frames) of holding brake while nearly stopped
       if ((brakeHoldFrames>30&&player.speed<.35)||reverseEngaged) {
         if (!reverseEngaged) {
           reverseEngaged=true;
@@ -2264,9 +2695,20 @@ function gameLoop(time) {
         input.reverse=true;
       } else {
         input.brake=true;
-        if (brakeHoldFrames>60) input.handbrake=true; // handbrake/drift at 1s
+        if (brakeHoldFrames>60) input.handbrake=true;
       }
     } else { brakeHoldFrames=0; reverseEngaged=false; }
+
+// B key = handbrake slide while turning at speed
+    if (keys['KeyB'] && (input.left||input.right) && player.speed > player.maxSpeed*0.5 && !player._spinning) {
+      player._spinning = true;
+      player._spinFrames = 60;
+      player._spinDir = input.right ? 1 : -1;
+      player._cornerAcc = 0;
+      player._slideLogged = false;
+      // Handbrake costs 1% tyre tread per use
+      player.tyreTread = Math.max(0, player.tyreTread - 1.0);
+    }
 
     if (raceState!=='racing') {
       input.up=input.brake=input.left=input.right=input.handbrake=input.reverse=false;
@@ -2286,6 +2728,28 @@ function gameLoop(time) {
 	  }
 	}
 	applyTileEffect(player);
+  // Puddle check for player
+  if (weather==='rain' && !player._onPuddle && player.speed > 1) {
+    for (const p of weatherPuddles) {
+      const dx=player.x-p.x, dy=player.y-p.y;
+      if ((dx*dx)/(p.rx*p.rx)+(dy*dy)/(p.ry*p.ry) < 1) {
+        player._onPuddle=true;
+        player._puddleFrames=40;
+        // Wobble: random left or right
+        player._puddleWobble=(Math.random()<0.5?1:-1)*0.04;
+        player.tyreTread = Math.max(0, player.tyreTread - (0.2 + Math.random()*0.3));
+        playSplashSound();
+        break;
+      }
+    }
+  }
+  if (player._puddleFrames>0) {
+    player._puddleFrames--;
+    player.angle += player._puddleWobble * (player._puddleFrames/40);
+    // 25% speed reduction
+    player.vx *= 0.975; player.vy *= 0.975;
+    if (player._puddleFrames<=0) { player._onPuddle=false; player._puddleWobble=0; }
+  }
 	const prevAngle = player.angle;
 	player.applyInput(input);
 	const lateralSlip = Math.abs(
@@ -2298,27 +2762,55 @@ function gameLoop(time) {
 	} else {
 	  stopScreech();
 	}
-	player.moveWithCollision(track, ()=>{
+	player.moveWithCollision(track, (spd)=>{
       const t=performance.now();
-      if (t-lastWallCollisionTime>120) { playCollisionSound(0.4,'wall'); lastWallCollisionTime=t; }
+      if (t-lastWallCollisionTime>120) {
+        playCollisionSound(0.4,'wall');
+        lastWallCollisionTime=t;
+        applyCarDamage(player, spd);
+      }
     });
     updateCheckpoints(player, level);
 	
 	// MULTIPLAYER: broadcast our position to other players
     if (mp.connected && mp.roomCode) mp.sendState(player);
-		applyRemoteCarCollisions();
+	applyRemoteCarCollisions();
 
 	if (raceState==='racing') {
 	  const allCars=[player,...opponents];
 	  for (const op of opponents) {
 		applyTileEffect(op);
+      // Puddle check for AI
+      if (weather==='rain' && !op._onPuddle && op.speed > 1) {
+        for (const p of weatherPuddles) {
+          const dx=op.x-p.x, dy=op.y-p.y;
+          if ((dx*dx)/(p.rx*p.rx)+(dy*dy)/(p.ry*p.ry) < 1) {
+            op._onPuddle=true;
+            op._puddleFrames=40;
+            op._puddleWobble=(Math.random()<0.5?1:-1)*0.04;
+            op.tyreTread = Math.max(0, op.tyreTread - (0.2 + Math.random()*0.3));
+            break;
+          }
+        }
+      }
+      if (op._puddleFrames>0) {
+        op._puddleFrames--;
+        op.angle += op._puddleWobble * (op._puddleFrames/40);
+        op.vx *= 0.975; op.vy *= 0.975;
+        if (op._puddleFrames<=0) { op._onPuddle=false; op._puddleWobble=0; }
+      }
 		op.applyInput(op.chooseInput(level.waypoints, allCars));
 		op.moveWithCollision(track, ()=>{});
 		updateCheckpoints(op, level);
 		rescueStuckCar(op);
 	  }
 	  rescueStuckCar(player);
-	  checkCarCollisions();
+  // Engine blowout — trigger race over
+  if (player._engineBlown && !player._blowoutTriggered && raceState==='racing') {
+    const level = LEVELS[gameState.currentLevel];
+    triggerEngineBlowout(level);
+  }
+  checkCarCollisions();
 	}
     updatePositions(level);
     maybeFinishRace(level);
@@ -2391,6 +2883,23 @@ function render() {
     ctx.fillRect(obj.x-2,obj.y-4,4,8);
   }
 
+// Puddles
+  if (weather === 'rain') {
+    for (const p of weatherPuddles) {
+      ctx.save();
+      ctx.globalAlpha = 0.38;
+      ctx.fillStyle = '#7aaccc';
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, p.rx, p.ry, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha = 0.18;
+      ctx.strokeStyle = '#aaddff';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
   // Start/finish line
   const sl=track.level.startLine;
   const cs=10;
@@ -2429,6 +2938,30 @@ function render() {
   // MULTIPLAYER: draw remote human players on top of everything
   if (mp.connected) mp.drawRemoteCars(ctx, 0, 0);
   ctx.restore();
+
+  // Rain overlay (screen space)
+  if (weather === 'rain') {
+    ctx.save();
+    for (const d of rainDrops) {
+      d.sy += d.spd;
+      d.sx -= d.spd * 0.3;
+      if (d.sy > CANVAS_H || d.sx < 0) {
+        d.sy = -10; d.sx = Math.random()*CANVAS_W;
+      }
+      ctx.globalAlpha = 0.18;
+      ctx.strokeStyle = '#aaccee';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(d.sx, d.sy);
+      ctx.lineTo(d.sx - 3, d.sy - 8);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 0.07;
+    ctx.fillStyle = '#4488bb';
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    ctx.restore();
+  }
+
   drawMinimap();
   updateHUD();
 }
@@ -2588,14 +3121,27 @@ function updateHUD() {
   const m=Math.floor(t/60), s=(t-m*60).toFixed(2).padStart(5,'0');
   const ef=player.tileEffect;
   const efStr=ef==='oil'?'<span style="color:#8888ff">OIL</span>':ef==='rain'?'<span style="color:#4488cc">RAIN</span>':'';
+  const wxStr=weather==='rain'?'<span style="color:#88aacc">🌧 RAIN</span>':weather==='sunny'?'<span style="color:#ffcc44">☀ SUNNY</span>':'';
   document.getElementById('hud').innerHTML=`
     <div class="hud-item"><div class="hud-label">SPEED</div><div class="bar"><div class="bar-fill" style="width:${sp}%"></div></div></div>
-    <div class="hud-item"><div class="hud-label">POS</div><div class="hud-value">${player.position}/${opponents.length+1+Object.keys(mp.players).length}</div></div>
+<!-- MP RESTORE: ...+Object.keys(mp.players).length} -->
+<div class="hud-item"><div class="hud-label">POS</div><div class="hud-value">${player.position}/${opponents.length+1+Object.keys(mp.players).length}</div></div>
     <div class="hud-item"><div class="hud-label">LAP</div><div class="hud-value">${lap}/${level.laps}</div></div>
     <div class="hud-item"><div class="hud-label">TIME</div><div class="hud-value">${m}:${s}</div></div>
     <div class="hud-item"><div class="hud-label">MPH</div><div class="hud-value">${Math.floor(player.speed*25)}</div></div>
     <div class="hud-item"><div class="hud-label">GEAR</div><div class="hud-value" style="color:${reverseEngaged?'#ff6644':'#fff'}">${reverseEngaged?'R':'D'}</div></div>
     ${efStr?`<div class="hud-item"><div class="hud-label">FX</div><div class="hud-value">${efStr}</div></div>`:''}
+    ${wxStr?`<div class="hud-item"><div class="hud-label">WX</div><div class="hud-value">${wxStr}</div></div>`:''}
+<div class="hud-item">
+      <div class="hud-label">TYRES</div>
+      <div class="bar"><div class="bar-fill" style="width:${player.tyreTread.toFixed(0)}%;background:${player._tyrePopped?'#ff2222':player.tyreTread<20?'#ff6600':player.tyreTread<50?'#ffcc00':'#44ff44'}"></div></div>
+      <div class="hud-value" style="font-size:10px;color:${player._tyrePopped?'#ff2222':'#fff'}">${player._tyrePopped?'BLOWN':player.tyreTread.toFixed(0)+'%'}</div>
+    </div>
+    <div class="hud-item">
+      <div class="hud-label">DAMAGE</div>
+      <div class="bar"><div class="bar-fill" style="width:${player.damage.toFixed(0)}%;background:${player._engineBlown?'#ff2222':player.damage>80?'#ff4400':player.damage>50?'#ffaa00':'#44aaff'}"></div></div>
+      <div class="hud-value" style="font-size:10px;color:${player._engineBlown?'#ff2222':'#fff'}">${player._engineBlown?'ENGINE':player.damage.toFixed(0)+'%'}</div>
+    </div>
   `;
 }
 
@@ -2604,6 +3150,7 @@ function updateHUD() {
    ===================================================================== */
 let builderCanvas2, builderCtx2;
 let builderGridSize = 10;
+let builderEditingLevel = null; // set when editing an existing custom course
 let builderCellSize = 54;
 // Three separate grids: road chars, obstacle chars, width chars
 let builderRoadGrid  = [];   // [r][c] = road char ('0','|','S', etc.)
@@ -3124,8 +3671,9 @@ async function saveBuilderCourse() {
   if (!hasS)    { setBuilderStatus('⚠ Place an S (start/finish) tile!','#ff8844'); return; }
   if (!hasRoad) { setBuilderStatus('⚠ Add some road tiles first!','#ff8844'); return; }
 
+const difficulty = document.getElementById('course-difficulty-select').value;
 const courseData = {
-    name, gridSize: builderGridSize,
+    name, difficulty, gridSize: builderGridSize,
     roadGrid:   builderRoadGrid.map(row=>[...row]),
     obstGrid:   builderObstGrid.map(row=>[...row]),
     widthGrid:  builderWidthGrid.map(row=>[...row]),
@@ -3136,11 +3684,23 @@ const courseData = {
     generatedData: builderGeneratedData || null,
     createdAt: Date.now(),
   };
-  try {
-    const id = await dbAdd('courses', courseData);
-    courseData.id = id;
-    const level = courseToLevel(courseData);
-    LEVELS.push(level);
+try {
+    if (builderEditingLevel && builderEditingLevel.customId != null) {
+      // Update existing course in DB
+      courseData.id = builderEditingLevel.customId;
+      await dbPut('courses', courseData);
+      const idx = LEVELS.indexOf(builderEditingLevel);
+      const updatedLevel = courseToLevel(courseData);
+      if (idx !== -1) LEVELS[idx] = updatedLevel;
+      else LEVELS.push(updatedLevel);
+      builderEditingLevel = null;
+    } else {
+      // New course — insert
+      const id = await dbAdd('courses', courseData);
+      courseData.id = id;
+      const level = courseToLevel(courseData);
+      LEVELS.push(level);
+    }
     renderCourseList();
     setBuilderStatus('✓ Saved! Returning to menu…','#44ff88');
     setTimeout(closeBuilder, 1400);
@@ -3743,6 +4303,7 @@ function openBuilderForEdit(level) {
   const gs = cd.gridSize || 10;
   document.getElementById('grid-size-select').value = gs;
   document.getElementById('course-name-input').value = cd.name || '';
+  if (cd.difficulty) document.getElementById('course-difficulty-select').value = cd.difficulty;
   builderStartAngle = cd.startAngle || 0;
 
   // Update start dir button label
@@ -3774,21 +4335,17 @@ function openBuilderForEdit(level) {
   // Restore sim data if present
   builderGeneratedData = (cd.generatedData) ? {...cd.generatedData} : null;
 
-  // ── Pace-lap-only mode ──
-  // Hide all editing controls, show only PACE LAP button
+ // Full edit mode — painting enabled
+  builderEditLocked = false;
+  builderEditingLevel = level; // remember which level we're updating
+
   document.getElementById('builder-screen').classList.add('active');
   showScreen(null);
 
-  // Disable painting
-  builderEditLocked = true;
+  document.getElementById('pace-lap-btn').style.display =
+    builderGeneratedData ? 'inline-block' : 'none';
 
-  // Show pace lap button if generated data exists, otherwise inform user
-  if (builderGeneratedData) {
-    document.getElementById('pace-lap-btn').style.display = 'inline-block';
-    setBuilderStatus('EDIT MODE — pace lap only. Paint disabled.','#bb88ee');
-  } else {
-    setBuilderStatus('⚠ No waypoints found — run SIM + GENERATE first','#ff8844');
-  }
+  setBuilderStatus('EDITING: ' + (cd.name || 'COURSE') + ' — make changes then SAVE','#ffcc66');
 
   renderPalette();
   drawBuilderCanvas();
@@ -3796,6 +4353,7 @@ function openBuilderForEdit(level) {
 
 function openBuilder() {
   builderEditLocked = false;
+  builderEditingLevel = null;
   document.getElementById('pace-lap-btn').style.display = 'none';
   generateAndShowLevelCode();
   document.getElementById('builder-screen').classList.add('active');
@@ -3805,6 +4363,10 @@ function closeBuilder() {
   builderEditLocked = false;
   document.getElementById('builder-screen').classList.remove('active');
   showScreen('menu-screen');
+}
+function hideWeatherHud() {
+  const el = document.getElementById('weather-hud');
+  if (el) el.style.display = 'none';
 }
 
 /* =====================================================================
@@ -3894,7 +4456,7 @@ function renderCourseList() {
   BUILTIN_LEVELS.forEach((level,i) => {
     const btn = document.createElement('button');
     btn.className = 'btn';
-    btn.textContent = `${i+1} ▸ ${level.name} (EASY)`;
+    btn.textContent = `${i+1} ▸ ${level.name}${level.info ? ' ('+level.info.replace(/\.$/,'').toUpperCase()+')' : ''}`;
     btn.onclick = () => startRace(i);
     list.appendChild(btn);
   });
@@ -3905,7 +4467,7 @@ function renderCourseList() {
     const idx = LEVELS.indexOf(level);
     const btn = document.createElement('button');
     btn.className = 'btn';
-    btn.textContent = `${BUILTIN_LEVELS.length + presets.indexOf(level) + 1} ▸ ${level.name}`;
+    btn.textContent = `${BUILTIN_LEVELS.length + presets.indexOf(level) + 1} ▸ ${level.name}${level.info ? ' ('+level.info.replace(/\.$/,'').toUpperCase()+')' : ''}`;
     btn.onclick = () => startRace(idx);
     list.appendChild(btn);
   });
@@ -4014,6 +4576,7 @@ init();
 /* ═══════════════════════════════════════════════════════════
    MULTIPLAYER
    ═══════════════════════════════════════════════════════════ */
+
 class MultiplayerClient {
   constructor() {
     this.ws=null; this.roomCode=null; this.myId=null;
@@ -4215,8 +4778,19 @@ function startMultiplayerRace(levelIndex,slots,myId){
     op.initWaypointIndex(level.waypoints);
     if(level.paceWaypoints&&level.paceWaypoints.length>4){
       op.learnedRoute=level.paceWaypoints;
-      op.learnedRouteIdx=0;
       op._usePaceRoute=true;
+      let bestPaceIdx=0,bestPaceScore=-Infinity;
+      const fwdX=Math.cos(op.angle),fwdY=Math.sin(op.angle);
+      for(let i=0;i<level.paceWaypoints.length;i++){
+        const dx=level.paceWaypoints[i].x-op.x;
+        const dy=level.paceWaypoints[i].y-op.y;
+        const d=Math.hypot(dx,dy);
+        if(d<10)continue;
+        const dot=(dx/d)*fwdX+(dy/d)*fwdY;
+        const score=dot*2-d*0.001;
+        if(score>bestPaceScore){bestPaceScore=score;bestPaceIdx=i;}
+      }
+      op.learnedRouteIdx=bestPaceIdx;
     }
   });
   cameraX=player.x-CANVAS_W*.5;
@@ -4224,6 +4798,42 @@ function startMultiplayerRace(levelIndex,slots,myId){
   clampCamera();
   skidMarks.length=0;debrisObjs.length=0;
   brakeHoldFrames=0;reverseEngaged=false;finishTriggered=false;
+  // Pick random weather
+weather = WEATHER_TYPES[Math.floor(Math.random()*WEATHER_TYPES.length)];
+  weatherPuddles = [];
+  rainDrops = [];
+  const wxHud = document.getElementById('weather-hud');
+  if (wxHud) {
+    const wxLabel = weather==='rain' ? '🌧 RAIN' : weather==='sunny' ? '☀ SUNNY' : '⛅ NORMAL';
+    const wxColor = weather==='rain' ? '#88aacc' : weather==='sunny' ? '#ffcc44' : '#aaaaaa';
+    wxHud.style.display = 'block';
+    wxHud.style.color = wxColor;
+    wxHud.style.borderColor = wxColor;
+    wxHud.textContent = wxLabel;
+  }
+  if (weather === 'rain') {
+    // Scatter puddles on road tiles
+    const level = LEVELS[levelIndex];
+    const rows = level.grid.length, cols = level.grid[0].length;
+    const puddleCount = 18 + Math.floor(Math.random()*12);
+    let attempts = 0;
+    while (weatherPuddles.length < puddleCount && attempts++ < 500) {
+      const r = Math.floor(Math.random()*rows), c = Math.floor(Math.random()*cols);
+      if (ROAD_TILES.has(level.grid[r][c])) {
+        weatherPuddles.push({
+          x: c*TILE + TILE*0.2 + Math.random()*TILE*0.6,
+          y: r*TILE + TILE*0.2 + Math.random()*TILE*0.6,
+          rx: 10 + Math.random()*18,
+          ry: 5 + Math.random()*10,
+        });
+      }
+    }
+    // Seed rain drops
+    for (let i=0;i<120;i++) rainDrops.push({
+      sx: Math.random()*CANVAS_W, sy: Math.random()*CANVAS_H,
+      spd: 6+Math.random()*4, life: Math.random()
+    });
+  }
   lastWallCollisionTime=0;lastCarCollisionTime=0;lastDebrisDropTime=0;
   wrongWayFrames=0;_playerWpIdx=0;
   document.getElementById('wrong-way').style.display='none';
@@ -4236,6 +4846,7 @@ function startMultiplayerRace(levelIndex,slots,myId){
   startEngine();
   if(!rafRunning){rafRunning=true;lastFrameTime=performance.now();requestAnimationFrame(gameLoop);}
 }
+
 
 </script>
 </body>
