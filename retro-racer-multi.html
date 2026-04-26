@@ -4658,7 +4658,7 @@ class MultiplayerClient {
 
 const mp = new MultiplayerClient();
 
-function showLobbyStatus(text,isError=false){function applyRemoteCarCollisions() {
+function applyRemoteCarCollisions() {
   if (!mp.connected || !mp.roomCode) return;
   for (const [id, p] of Object.entries(mp.players)) {
     const dx = player.x - p.x;
