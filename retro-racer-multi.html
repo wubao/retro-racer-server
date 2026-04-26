@@ -2548,10 +2548,10 @@ function finishCheck(car, level) {
     car.finished=true;
     car.finishTime=performance.now()-gameState.raceStartTimestamp;
     // MULTIPLAYER: tell others we finished
-    if (car===player && mp.connected && mp.roomCode) mp.sendEvent('finish', { time: car.finishTime });
+    // if (car===player && mp.connected && mp.roomCode) mp.sendEvent('finish', { time: car.finishTime });
   } else {
     if (car===player) playBeep(1000,.12,'square',.12);
-	if (mp.connected && mp.roomCode) mp.sendEvent('lap', { lap: car.lap });
+	// if (mp.connected && mp.roomCode) mp.sendEvent('lap', { lap: car.lap });
     // AI car just completed lap 1 — lock in the learned route
     if (car instanceof AICar && car.lap === 1 && !car.learnedRoute) {
       car.finaliseLap1Route();
@@ -2773,8 +2773,8 @@ function gameLoop(time) {
     updateCheckpoints(player, level);
 	
 	// MULTIPLAYER: broadcast our position to other players
-    if (mp.connected && mp.roomCode) mp.sendState(player);
-	applyRemoteCarCollisions();
+    // if (mp.connected && mp.roomCode) mp.sendState(player);
+	//	applyRemoteCarCollisions();
 
 	if (raceState==='racing') {
 	  const allCars=[player,...opponents];
@@ -2936,7 +2936,7 @@ function render() {
     car.draw(ctx);
   }
   // MULTIPLAYER: draw remote human players on top of everything
-  if (mp.connected) mp.drawRemoteCars(ctx, 0, 0);
+  // if (mp.connected) mp.drawRemoteCars(ctx, 0, 0);
   ctx.restore();
 
   // Rain overlay (screen space)
@@ -3125,7 +3125,7 @@ function updateHUD() {
   document.getElementById('hud').innerHTML=`
     <div class="hud-item"><div class="hud-label">SPEED</div><div class="bar"><div class="bar-fill" style="width:${sp}%"></div></div></div>
 <!-- MP RESTORE: ...+Object.keys(mp.players).length} -->
-<div class="hud-item"><div class="hud-label">POS</div><div class="hud-value">${player.position}/${opponents.length+1+Object.keys(mp.players).length}</div></div>
+<div class="hud-item"><div class="hud-label">POS</div><div class="hud-value">${player.position}/${opponents.length+1}</div></div>
     <div class="hud-item"><div class="hud-label">LAP</div><div class="hud-value">${lap}/${level.laps}</div></div>
     <div class="hud-item"><div class="hud-label">TIME</div><div class="hud-value">${m}:${s}</div></div>
     <div class="hud-item"><div class="hud-label">MPH</div><div class="hud-value">${Math.floor(player.speed*25)}</div></div>
@@ -4576,7 +4576,7 @@ init();
 /* ═══════════════════════════════════════════════════════════
    MULTIPLAYER
    ═══════════════════════════════════════════════════════════ */
-
+/*
 class MultiplayerClient {
   constructor() {
     this.ws=null; this.roomCode=null; this.myId=null;
@@ -4846,7 +4846,7 @@ weather = WEATHER_TYPES[Math.floor(Math.random()*WEATHER_TYPES.length)];
   startEngine();
   if(!rafRunning){rafRunning=true;lastFrameTime=performance.now();requestAnimationFrame(gameLoop);}
 }
-
+*/
 
 </script>
 </body>
